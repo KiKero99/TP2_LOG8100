@@ -20,8 +20,9 @@ jobs:
           cd zap-cli-master
           pip install -r requirements.txt
           # Lancer ZAP et scanner l'application
-          zap.sh -daemon -port 8080 &
+          zap.sh -daemon -port 9090 &
           # Ici, ajoutez les commandes pour scanner votre application
+          cd dvna-master
           zap-cli quick-scan --self-contained <URL_DE_VOTRE_APPLICATION>
 
   code_analysis:
