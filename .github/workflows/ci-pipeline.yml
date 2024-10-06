@@ -7,6 +7,7 @@ on:
 
 jobs:
   enter_project:
+    runs-on: ubuntu-latest
     steps:
       -name: Enter project
       run: cd dvna-master
