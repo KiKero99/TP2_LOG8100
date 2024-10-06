@@ -12,18 +12,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up OWASP ZAP
+      - name: Run OWASP ZAP
         run: |
-          # Commandes pour installer et configurer ZAP
-          wget https://github.com/zaproxy/zap-cli/archive/refs/heads/master.zip
-          unzip master.zip
-          cd zap-cli-master
-          pip install -r requirements.txt
-          # Lancer ZAP et scanner l'application
-          zap.sh -daemon -port 9090 &
-          # Ici, ajoutez les commandes pour scanner votre application
-          cd dvna-master
-          zap-cli quick-scan --self-contained <URL_DE_VOTRE_APPLICATION>
+          # Lancer OWASP ZAP dans un conteneur Docker
+          docker run -t owasp/zap2docker-stable zap.sh -quickurl <localhost::9090> -quickout zap_report.html
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: zap-report
+          path: zap_report.html
 
   code_analysis:
     runs-on: ubuntu-latest
@@ -32,9 +30,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: SonarQube Scan
-        uses: sonarsource/sonarcloud-github-action@v1
-        with:
-          args: |
-            -Dsonar.projectKey=<VOTRE_PROJECT_KEY>
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.login=${{ secrets.ACCESS_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        run: |
+          # Télécharger et configurer Sonar Scanner
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner.zip -d sonar-scanner
+          export PATH="$PATH:$PWD/sonar-scanner/bin"
+          sonar-scanner \
+            -Dsonar.projectKey=<VOTRE_PROJECT_KEY> \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONAR_TOKEN
