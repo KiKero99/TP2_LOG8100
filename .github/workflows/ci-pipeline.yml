@@ -6,11 +6,6 @@ on:
       - main
 
 jobs:
-  enter_project:
-    runs-on: ubuntu-latest
-    steps:
-      -name: Enter project
-      run: cd dvna-master
   security_tests:
     runs-on: ubuntu-latest
     steps:
