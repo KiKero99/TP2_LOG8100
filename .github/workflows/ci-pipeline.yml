@@ -16,29 +16,29 @@ jobs:
         run: |
           # Lancer OWASP ZAP dans un conteneur Docker
           echo uwu
-      #     docker run -t owasp/zap2docker-stable zap.sh -quickurl <https://moodle.polymtl.ca/> -quickout zap_report.html
+  #         docker run -t owasp/zap2docker-stable zap.sh -quickurl <https://moodle.polymtl.ca/> -quickout zap_report.html
 
-      # - name: Upload ZAP Report
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: zap-report
-      #     path: zap_report.html
+  #     - name: Upload ZAP Report
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: zap-report
+  #         path: zap_report.html
 
-  code_analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  # code_analysis:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: SonarQube Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          # Télécharger et configurer Sonar Scanner
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner.zip -d sonar-scanner
-          export PATH="$PATH:$PWD/sonar-scanner/bin"
-          sonar-scanner \
-            -Dsonar.projectKey=<VOTRE_PROJECT_KEY> \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN
+  #     - name: SonarQube Scan
+  #       env:
+  #         SONAR_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  #       run: |
+  #         # Télécharger et configurer Sonar Scanner
+  #         curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+  #         unzip sonar-scanner.zip -d sonar-scanner
+  #         export PATH="$PATH:$PWD/sonar-scanner/bin"
+  #         sonar-scanner \
+  #           -Dsonar.projectKey=<VOTRE_PROJECT_KEY> \
+  #           -Dsonar.host.url=https://sonarcloud.io \
+  #           -Dsonar.login=$SONAR_TOKEN
