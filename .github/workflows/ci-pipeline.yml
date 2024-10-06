@@ -15,7 +15,7 @@ jobs:
       - name: Run OWASP ZAP
         run: |
           # Lancer OWASP ZAP dans un conteneur Docker
-          docker run -t owasp/zap2docker-stable zap.sh -quickurl <URL_DE_VOTRE_APPLICATION> -quickout zap_report.html
+          docker run -t owasp/zap2docker-stable zap.sh -quickurl <https://moodle.polymtl.ca/> -quickout zap_report.html
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v3
