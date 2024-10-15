@@ -7,7 +7,7 @@ on:
 
 permissions:
   issues: write
-  
+
 jobs:
   security_tests:
     runs-on: ubuntu-latest
@@ -19,14 +19,19 @@ jobs:
         id: zap_scan
         uses: zaproxy/action-baseline@v0.13.0
         with:
-          # No token needed for OWASP Juice Shop
           docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
-          target: 'https://preview.owasp-juice.shop'  # Public OWASP Juice Shop instance
+          target: 'https://preview.owasp-juice.shop'  
           cmd_options: '-a'
+      
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v1.0
+        with:
+          projectBaseDir: './juice-shop'  
+          sonarHostUrl: 'https://sonarcloud.io'
+          sonarToken: ${{ secrets.SONNAR_TOKEN }}  # The SonarCloud token from GitHub secrets
+          # args: >
+          #   -Dsonar.organization=<your-sonarcloud-organization>
+          #   -Dsonar.projectKey=<your-project-key>
+          #   -Dsonar.sources=.
 
-      - name: Run Orchestron Security Scan
-        run: |
-          curl -H "Secret-Key: 841c73b1b590cbc00d582be4f27a6b2e9faf9742" \
-               -H "Access-Key: 281c3c44410dc36623c3e187a1987a48d90e99e0" \
-               -d '{"target": "https://preview.owasp-juice.shop", "scan_type": "full"}' \
-               http://localhost/api/webhooks/post/bb58dc5c-5083-42ef-b072-cf9bae7a1dbf/
+     
