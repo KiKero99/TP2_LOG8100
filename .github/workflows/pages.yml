@@ -1,37 +1,9 @@
-#name: Deploy GitHub Pages
-
-#on:
-#  push:
-#    branches:
-#      - main
-
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
-
-#    steps:
-
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-
-#      - name: Deploy to GitHub Pages
-#        run: |
-#          git init
-#          git config user.name "github-actions[bot]"
-#          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-#          git add .
-#          git commit -m "Deploy to GitHub Pages"
-
-          # Correct push command using GITHUB_TOKEN
-#          git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
-
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # The branch you want to trigger the deployment from
+      - main
 
 jobs:
   deploy:
@@ -41,9 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Deploy the ./docs folder to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dvna-master/docs  # Directory you want to deploy
+          publish_dir: ./dvna-master/docs
