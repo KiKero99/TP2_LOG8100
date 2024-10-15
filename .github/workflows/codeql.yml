@@ -1,86 +1,50 @@
 
-# name: "CodeQL Advanced"
+name: CI Pipeline / CodeQL
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
-#   schedule:
-#     - cron: '19 12 * * 0'
-
-# jobs:
-#   analyze:
-#     name: Analyze (${{ matrix.language }})
-#     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-#     permissions:
-#       security-events: write
-#       packages: read
-#       actions: read
-#       contents: read
-
-#     strategy:
-#       fail-fast: false
-#       matrix:
-#         include:
-#         - language: javascript-typescript
-#           build-mode: none
-#     steps:
-#     - name: Checkout repository
-#       uses: actions/checkout@v4
-
-#     - name: Initialize CodeQL
-#       uses: github/codeql-action/init@v3
-#       with:
-#         languages: ${{ matrix.language }}
-#         build-mode: ${{ matrix.build-mode }}
-#     - if: matrix.build-mode == 'manual'
-#       shell: bash
-#       run: |
-#         echo 'If you are using a "manual" build mode for one or more of the' \
-#           'languages you are analyzing, replace this with the commands to build' \
-#           'your code, for example:'
-#         echo '  make bootstrap'
-#         echo '  make release'
-#         exit 1
-
-#     - name: Perform CodeQL Analysis
-#       uses: github/codeql-action/analyze@v3
-#       with:
-#         category: "/language:${{matrix.language}}"
-
-
-name: Example workflow for Node using Snyk
-
-on: push
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '19 12 * * 0'
 
 jobs:
-  security:
-    runs-on: ubuntu-latest
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - language: javascript-typescript
+          build-mode: none
     steps:
-      # Step 1: Checkout the source code
-      - uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js (use a compatible version)
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'  # Use Node.js 14.x or 16.x for compatibility
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+    - if: matrix.build-mode == 'manual'
+      shell: bash
+      run: |
+        echo 'If you are using a "manual" build mode for one or more of the' \
+          'languages you are analyzing, replace this with the commands to build' \
+          'your code, for example:'
+        echo '  make bootstrap'
+        echo '  make release'
+        exit 1
 
-      # Step 3: Install Snyk CLI
-      - name: Install Snyk CLI
-        run: npm install -g snyk
-
-      # Step 4: Navigate to the dvna-master directory and install dependencies
-      - name: Install npm dependencies
-        run: |
-          cd dvna-master  # Navigate to the directory containing package.json
-          npm install      # Install Node.js dependencies
-
-      # Step 5: Run Snyk to check for vulnerabilities
-      - name: Run Snyk to check for vulnerabilities
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          cd dvna-master  # Navigate to the directory containing package.json
-          snyk test       # Run the Snyk test command
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"

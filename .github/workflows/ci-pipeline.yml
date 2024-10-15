@@ -1,83 +1,33 @@
-# # name: CI Pipeline
+name: CI Pipeline / Zap
 
-# # on:
-# #   push:
-# #     branches:
-# #       - main
+on:
+  push:
+    branches:
+      - main
 
-# # permissions:
-# #   contents: read
-# #   security-events: write  # Allow CodeQL to upload results and create alerts
+permissions:
+  contents: read
+  security-events: write  # Allow CodeQL to upload results and create alerts
 
-# # jobs:
-# #   security_tests:
-# #     runs-on: ubuntu-latest
-# #     steps:
-# #       # Step 1: Checkout the source code
-# #       - name: Checkout code
-# #         uses: actions/checkout@v2
+jobs:
+  security_tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the source code
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-# #       # Step 2: Run OWASP ZAP scan
-# #       # - name: Run OWASP ZAP
-# #       #   id: zap_scan
-# #       #   uses: zaproxy/action-baseline@v0.13.0
-# #       #   with:
-# #       #     docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
-# #       #     target: 'https://preview.owasp-juice.shop'  
-# #       #     cmd_options: '-a'
-
-# #       # CODE QL
-# #       # - name: Initialize CodeQL
-# #       #   uses: github/codeql-action/init@v2
-# #       #   with:
-# #       #     languages: 'javascript'  # Set the languages that apply to your project
-
-      
-# #       # - name: Perform CodeQL Analysis
-# #       #   uses: github/codeql-action/analyze@v2
-
-
-# #       #SNYK update
-# #       # Step 2: Install Snyk CLI
-# #       - name: Install Snyk CLI
-# #         run: npm install -g snyk
-
-# #       # Step 3: Authenticate Snyk
-# #       - name: Authenticate with Snyk
-# #         run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-# #       # Step 4: Run Snyk test for vulnerabilities
-# #       - name: Test for vulnerabilities with Snyk
-# #         run: snyk test
+      # Step 2: Run OWASP ZAP scan
+      - name: Run OWASP ZAP
+        id: zap_scan
+        uses: zaproxy/action-baseline@v0.13.0
+        with:
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+          target: 'https://preview.owasp-juice.shop'  
+          cmd_options: '-a'
 
     
-# name: CI Pipeline
 
-# on:
-#   push:
-#     branches:
-#       - main
 
-# permissions:
-#   contents: read
 
-# jobs:
-#   security_tests:
-#     runs-on: ubuntu-latest
-#     steps:
-#       # Step 1: Checkout the source code
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       # Step 2: Install Snyk CLI
-#       - name: Install Snyk CLI
-#         run: npm install -g snyk
-
-#       # Step 3: Authenticate Snyk
-#       - name: Authenticate with Snyk
-#         run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-#       # Step 4: Run Snyk test for Node.js (package.json)
-#       - name: Test for vulnerabilities with Snyk
-#         run: snyk test --file=package.json
-
+ 
