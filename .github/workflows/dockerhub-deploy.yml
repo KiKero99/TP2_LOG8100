@@ -31,7 +31,7 @@ jobs:
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
           username: KiKenRo 99
-          password : ${{ secrets.DOCKERHUB_TOKEN }}
+          password : sexsexsex
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
