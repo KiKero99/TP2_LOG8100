@@ -49,13 +49,25 @@
 #       with:
 #         category: "/language:${{matrix.language}}"
 name: Example workflow for Node using Snyk
+
 on: push
+
 jobs:
   security:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      # Step 1: Checkout the source code
+      - uses: actions/checkout@v2
+
+      # Step 2: List files in dvna-master to confirm the structure
+      - name: List files in dvna-master
+        run: ls -la dvna-master
+
+      # Step 3: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
+          file: dvna-master/package.json  # Correct path to the package.json file
