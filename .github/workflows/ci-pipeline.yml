@@ -16,44 +16,14 @@ jobs:
         id: zap_scan
         uses: zaproxy/action-baseline@v0.13.0
         with:
-          #token: ${{secrets.ACCESS_TOKEN}}
+          # No token needed for OWASP Juice Shop
           docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
-          target: 'http://localhost:9090/'
+          target: 'https://preview.owasp-juice.shop'  # Public OWASP Juice Shop instance
           cmd_options: '-a'
 
       - name: Run Orchestron Security Scan
         run: |
           curl -H "Secret-Key: 841c73b1b590cbc00d582be4f27a6b2e9faf9742" \
-          -H "Access-Key: 281c3c44410dc36623c3e187a1987a48d90e99e0" \
-          http://localhost/api/webhooks/post/bb58dc5c-5083-42ef-b072-cf9bae7a1dbf/
-
-        
-
-          # Lancer OWASP ZAP dans un conteneur Docker
-        #  echo "We need to run OWASP ZAP here"
-  #         docker run -t owasp/zap2docker-stable zap.sh -quickurl <https://moodle.polymtl.ca/> -quickout zap_report.html
-
-  #     - name: Upload ZAP Report
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: zap-report
-  #         path: zap_report.html
-
-  # code_analysis:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
-
-  #     - name: SonarQube Scan
-  #       env:
-  #         SONAR_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-  #       run: |
-  #         # Télécharger et configurer Sonar Scanner
-  #         curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-  #         unzip sonar-scanner.zip -d sonar-scanner
-  #         export PATH="$PATH:$PWD/sonar-scanner/bin"
-  #         sonar-scanner \
-  #           -Dsonar.projectKey=<VOTRE_PROJECT_KEY> \
-  #           -Dsonar.host.url=https://sonarcloud.io \
-  #           -Dsonar.login=$SONAR_TOKEN
+               -H "Access-Key: 281c3c44410dc36623c3e187a1987a48d90e99e0" \
+               -d '{"target": "https://preview.owasp-juice.shop", "scan_type": "full"}' \
+               http://localhost/api/webhooks/post/bb58dc5c-5083-42ef-b072-cf9bae7a1dbf/
