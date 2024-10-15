@@ -38,6 +38,11 @@ jobs:
 
 
       #SNYK update
+      # Step 2: Install Snyk CLI
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      # Step 3: Authenticate Snyk
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
