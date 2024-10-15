@@ -37,7 +37,7 @@ jobs:
       #   uses: github/codeql-action/analyze@v2
 
 
-      #SNYK
+      #SNYK update
       - name: Authenticate with Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
