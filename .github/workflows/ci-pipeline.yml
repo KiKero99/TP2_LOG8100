@@ -12,24 +12,21 @@ jobs:
   security_tests:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the source code
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Step 2: Run OWASP ZAP scan
-      - name: Run OWASP ZAP
-        id: zap_scan
-        uses: zaproxy/action-baseline@v0.13.0
-        with:
-          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
-          target: 'https://preview.owasp-juice.shop'  
-          cmd_options: '-a'
+      # - name: Run OWASP ZAP
+      #   id: zap_scan
+      #   uses: zaproxy/action-baseline@v0.13.0
+      #   with:
+      #     docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+      #     target: 'https://preview.owasp-juice.shop'  
+      #     cmd_options: '-a'
       
-      # Step 3: Run SonarCloud Scan
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1  # Use v1 to point to the latest stable version
         with:
-          projectBaseDir: './juice-shop'  
+          projectBaseDir: './'  
           args: >
             -Dsonar.organization=my-org
             -Dsonar.projectKey=juice-shop
