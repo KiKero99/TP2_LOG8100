@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '20 20 * * 6'  # Runs every Saturday at 8:20 PM UTC
+    - cron: '20 20 * * 6'
 
 permissions:
   contents: read
@@ -28,8 +28,8 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          file: your-file-to-test.yaml  # Path to your IaC file (e.g., deployment.yaml, main.tf)
-          'sarif-file-output': snyk.sarif  # Generate SARIF report
+          file: your-file-to-test.yaml  # Replace with the actual IaC file path
+          sarif-file-output: snyk.sarif  # Ensure Snyk generates the SARIF file
 
       # Step 2: Upload SARIF results to GitHub Code Scanning
       - name: Upload result to GitHub Code Scanning
