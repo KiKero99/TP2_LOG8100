@@ -3,19 +3,29 @@ name: Deploy GitHub Pages
 on:
   push:
     branches:
-      - main  # The branch to listen to for changes
+      - main  # The branch that triggers the deployment
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout your repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Install dependencies (if needed)
+      - name: Install dependencies
+        run: npm install  # Modify this if you don't need dependencies
+
+      # Step 3: Build your site (optional, if needed)
+      - name: Build site
+        run: npm run build  # Modify this to match your build command
+
+      # Step 4: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         run: |
-          cd ./dvna-master/docs
+          cd cd ./dvna-master/docs
           git init
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -23,4 +33,5 @@ jobs:
           git add .
           git commit -m "Deploy to GitHub Pages"
 
+          # Correct push command using GITHUB_TOKEN
           git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
