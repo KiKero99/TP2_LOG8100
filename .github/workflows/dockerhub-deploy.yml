@@ -6,7 +6,7 @@
 # GitHub recommends pinning actions to a commit SHA.
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
-#in work
+#in work and testing
 name: Publish Docker image
 
 on:
@@ -31,7 +31,7 @@ jobs:
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
           username: KiKenRo 99
-          password : sexsexsex
+          password : ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
