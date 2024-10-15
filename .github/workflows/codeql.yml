@@ -61,17 +61,23 @@ jobs:
       # Step 1: Checkout the source code
       - uses: actions/checkout@v2
 
-      # Step 2: Install Snyk CLI
+      # Step 2: Set up Node.js (use a compatible version)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'  # Use Node.js 14.x or 16.x for compatibility
+
+      # Step 3: Install Snyk CLI
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      # Step 3: Navigate to the dvna-master directory and install dependencies
+      # Step 4: Navigate to the dvna-master directory and install dependencies
       - name: Install npm dependencies
         run: |
           cd dvna-master  # Navigate to the directory containing package.json
           npm install      # Install Node.js dependencies
 
-      # Step 4: Run Snyk to check for vulnerabilities
+      # Step 5: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
