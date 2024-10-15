@@ -1,5 +1,5 @@
 FROM node:18
-WORKDIR .
+WORKDIR ./dvna-master
 COPY package*.json ./
 RUN npm install
 COPY . .
