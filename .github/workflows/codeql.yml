@@ -48,6 +48,8 @@
 #       uses: github/codeql-action/analyze@v3
 #       with:
 #         category: "/language:${{matrix.language}}"
+
+
 name: Example workflow for Node using Snyk
 
 on: push
@@ -59,11 +61,17 @@ jobs:
       # Step 1: Checkout the source code
       - uses: actions/checkout@v2
 
-      # Step 2: List files in dvna-master to verify the package.json location
-      - name: List files in dvna-master
-        run: ls -la dvna-master
+      # Step 2: Install Snyk CLI
+      - name: Install Snyk CLI
+        run: npm install -g snyk
 
-      # Step 3: Navigate to the dvna-master directory and run Snyk
+      # Step 3: Navigate to the dvna-master directory and install dependencies
+      - name: Install npm dependencies
+        run: |
+          cd dvna-master  # Navigate to the directory containing package.json
+          npm install      # Install Node.js dependencies
+
+      # Step 4: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
