@@ -25,4 +25,4 @@ jobs:
           git commit -m "Deploy to GitHub Pages"
 
           # Correct push command using GITHUB_TOKEN
-          git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" master:gh-pages
+          git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" main:gh-pages
