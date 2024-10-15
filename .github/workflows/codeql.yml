@@ -65,11 +65,13 @@ jobs:
       - name: Install Snyk CLI
         run: npm install -g snyk
 
-      # Step 3: List files in dvna-master to verify the package.json location (optional for debugging)
-      - name: List files in dvna-master
-        run: ls -la dvna-master
+      # Step 3: Navigate to the dvna-master directory and install dependencies
+      - name: Install npm dependencies
+        run: |
+          cd dvna-master  # Navigate to the directory containing package.json
+          npm install      # Install Node.js dependencies
 
-      # Step 4: Navigate to the dvna-master directory and run Snyk
+      # Step 4: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
