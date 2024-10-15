@@ -1,8 +1,7 @@
 FROM node:18
-CMD ["cd", "dvna-master"]
-WORKDIR .
-COPY package*.json ./
+WORKDIR /dvna-master
+COPY dvna-master/package*.json ./
 RUN npm install
-COPY . .
+COPY dvna-master .
 EXPOSE 9090
 CMD ["node", "server.js"]
