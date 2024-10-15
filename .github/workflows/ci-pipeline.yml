@@ -6,7 +6,8 @@ on:
       - main
 
 permissions:
-  issues: write  # Required to open issues if vulnerabilities are found
+  contents: read
+  security-events: write  # Allow CodeQL to upload results and create alerts
 
 jobs:
   security_tests:
