@@ -59,11 +59,14 @@ jobs:
       # Step 1: Checkout the source code
       - uses: actions/checkout@v2
 
-      # Step 2: Run Snyk to check for vulnerabilities in the dvna-master directory
+      # Step 2: List files in dvna-master to verify the package.json location
+      - name: List files in dvna-master
+        run: ls -la dvna-master
+
+      # Step 3: Navigate to the dvna-master directory and run Snyk
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          directory: dvna-master  # Point to the directory containing package.json
+        run: |
+          cd dvna-master  # Navigate to the directory containing package.json
+          snyk test       # Run the Snyk test command
