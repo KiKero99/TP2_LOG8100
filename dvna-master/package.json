@@ -13,8 +13,9 @@
   "author": "sns",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "csurf": "^1.9.0",
+    "dotenv": "^16.4.5",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-fileupload": "^0.4.0",
@@ -29,10 +30,10 @@
     "node-serialize": "0.0.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.10.0",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^4.13.10",
     "winston": "^3.0.0",
-    "x-xss-protection": "^1.1.0",
-    "pg": "^8.10.0",
-    "pg-hstore": "^2.3.4"
+    "x-xss-protection": "^1.1.0"
   }
 }
