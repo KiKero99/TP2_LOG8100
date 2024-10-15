@@ -75,7 +75,7 @@ jobs:
       - name: Install npm dependencies
         run: |
           cd dvna-master  # Navigate to the directory containing package.json
-          npm install      # Install Node.js dependencies
+          npm install      # Install Node.js dependencies after upgrading package.json
 
       # Step 5: Run Snyk to check for vulnerabilities
       - name: Run Snyk to check for vulnerabilities
