@@ -27,14 +27,13 @@ jobs:
       
       # Step 3: Run SonarCloud Scan
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v1.10
+        uses: sonarsource/sonarcloud-github-action@v1  # Use v1 to point to the latest stable version
         with:
           projectBaseDir: './juice-shop'  
           args: >
             -Dsonar.organization=my-org
             -Dsonar.projectKey=juice-shop
             -Dsonar.sources=.
-            
 
         env:
-          SONAR_TOKEN: ${{ secrets.SONNAR_TOKEN }} 
+          SONAR_TOKEN: ${{ secrets.SONNAR_TOKEN }}  # Ensure the correct secret name for SonarCloud token
