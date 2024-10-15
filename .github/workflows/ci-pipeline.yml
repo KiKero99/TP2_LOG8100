@@ -12,9 +12,11 @@ jobs:
   security_tests:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Checkout the source code
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # Step 2: Run OWASP ZAP scan
       - name: Run OWASP ZAP
         id: zap_scan
         uses: zaproxy/action-baseline@v0.13.0
@@ -23,15 +25,16 @@ jobs:
           target: 'https://preview.owasp-juice.shop'  
           cmd_options: '-a'
       
+      # Step 3: Run SonarCloud Scan
       - name: SonarCloud Scan
-        uses: sonarsource/sonarqube-scan-action@v1.0
+        uses: sonarsource/sonarcloud-github-action@v1.10
         with:
           projectBaseDir: './juice-shop'  
-          sonarHostUrl: 'https://sonarcloud.io'
-          sonarToken: ${{ secrets.SONNAR_TOKEN }}  # The SonarCloud token from GitHub secrets
-          # args: >
-          #   -Dsonar.organization=<your-sonarcloud-organization>
-          #   -Dsonar.projectKey=<your-project-key>
-          #   -Dsonar.sources=.
+          args: >
+            -Dsonar.organization=my-org
+            -Dsonar.projectKey=juice-shop
+            -Dsonar.sources=.
+            
 
-     
+        env:
+          SONAR_TOKEN: ${{ secrets.SONNAR_TOKEN }} 
