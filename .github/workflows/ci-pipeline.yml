@@ -18,7 +18,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
-          
+
       # Step 2: Checkout the source code
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,14 +32,14 @@ jobs:
       #     target: 'https://preview.owasp-juice.shop'  
       #     cmd_options: '-a'
       
-      # Step 4: Run SonarCloud Scan
-      - name: SonarCloud Scan
+      # Step 4: Run SonarCloud Scan with Java 17
+      - name: Run SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONNAR_TOKEN }}
+          JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17  # Ensure SonarCloud uses Java 17
         with:
           args: >
             -Dsonar.organization=my-org
             -Dsonar.projectKey=juice-shop
             -Dsonar.sources=.
-
-        env:
-          SONAR_TOKEN: ${{ secrets.SONNAR_TOKEN }}
