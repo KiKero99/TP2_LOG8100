@@ -26,12 +26,23 @@ jobs:
       #     target: 'https://preview.owasp-juice.shop'  
       #     cmd_options: '-a'
 
-      # Step 3: Initialize CodeQL for static analysis
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: 'javascript'  # Set the languages that apply to your project
+      # CODE QL
+      # - name: Initialize CodeQL
+      #   uses: github/codeql-action/init@v2
+      #   with:
+      #     languages: 'javascript'  # Set the languages that apply to your project
 
-      # Step 4: Perform CodeQL Analysis
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+      
+      # - name: Perform CodeQL Analysis
+      #   uses: github/codeql-action/analyze@v2
+
+
+      #SNYK
+      - name: Authenticate with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      # Step 4: Run Snyk test for vulnerabilities
+      - name: Test for vulnerabilities with Snyk
+        run: snyk test
+
+    
