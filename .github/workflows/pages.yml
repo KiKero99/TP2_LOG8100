@@ -1,19 +1,36 @@
-name: Build and Deploy
+name: 'GitHub Pages Deploy Action'
+description: 'A custom action to deploy the ./docs folder to GitHub Pages'
+author: 'kikero99'
+
 on:
   push:
     branches:
       - main
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
 
-      - name: Deploy
-        uses: KiKero99/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
+
+
+inputs:
+  github_token:
+    description: 'GitHub Token for authentication'
+    required: true
+  publish_dir:
+    description: 'Directory to publish'
+    required: true
+    default: './docs'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to GitHub Pages
+      shell: bash
+      run: |
+        cd ${{ inputs.publish_dir }}
+        git init
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy to GitHub Pages"
+        git push --force "https://${{ inputs.github_token }}@github.com/${{ github.repository }}.git" master:gh-pages
