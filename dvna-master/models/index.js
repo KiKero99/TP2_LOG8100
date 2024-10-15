@@ -1,51 +1,54 @@
 "use strict";
 
-var fs = require("fs");
-var path = require("path");
-var Sequelize = require("sequelize");
-var env = process.env.NODE_ENV || "development";
-var config = require("../config/db.js")
+const fs = require("fs");
+const path = require("path");
+const Sequelize = require("sequelize");
 
-if (process.env.DATABASE_URL) {
-  var sequelize = new Sequelize("dburl");
-} else {
-  var sequelize = new Sequelize("db", "db", "db", {
-    host: "db",
-    dialect: "postgres"
-  });
-}
+require('dotenv').config(); 
+
+const database = process.env.POSTGRES_DB || 'mydatabase';
+const username = process.env.POSTGRES_USER || 'postgres';
+const password = process.env.POSTGRES_PASSWORD || 'password';
+const host = process.env.DB_HOST || 'localhost';
+
+const sequelize = new Sequelize(database, username, password, {
+  host: host,
+  dialect: 'postgres',
+  logging: false, 
+});
 
 sequelize
   .authenticate()
-  .then(function (err) {
+  .then(() => {
     console.log('Connection has been established successfully.');
   })
-  .catch(function (err) {
+  .catch(err => {
     console.log('Unable to connect to the database:', err);
-  })
+  });
 
 sequelize
-  .sync( /*{ force: true }*/ ) // Force To re-initialize tables on each run
-  .then(function (err) {
-    console.log('It worked!');
-  }, function (err) {
-    console.log('An error occurred while creating the table:', err);
+  .sync() 
+  .then(() => {
+    console.log('Database synchronized successfully.');
   })
+  .catch(err => {
+    console.log('An error occurred while synchronizing the database:', err);
+  });
 
-var db = {};
+const db = {};
 
 fs
   .readdirSync(__dirname)
-  .filter(function (file) {
-    return (file.indexOf(".") !== 0) && (file !== "index.js");
+  .filter(file => {
+    return file.indexOf(".") !== 0 && file !== "index.js";
   })
-  .forEach(function (file) {
-    var model = sequelize.import(path.join(__dirname, file));
+  .forEach(file => {
+    const model = sequelize.import(path.join(__dirname, file));
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(function (modelName) {
-  if ("associate" in db[modelName]) {
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
