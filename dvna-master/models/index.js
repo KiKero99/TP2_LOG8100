@@ -13,9 +13,11 @@ const host = process.env.DB_HOST || 'localhost';
 
 // Initialize Sequelize connection
 const sequelize = new Sequelize("postgres://admin_admin:enriquetupapi01.@tp2-8100.postgres.database.azure.com:5432/postgres", {
-  host: host,
-  dialect: 'postgres',
+  dialect: 'postgres', 
   logging: false, 
+  dialectOptions: {
+    ssl: true, // Use SSL if your PostgreSQL instance requires it (like on Azure)
+  },
 });
 
 // Authenticate the connection
