@@ -41,7 +41,7 @@ jobs:
           registryPassword: sexsexsex
           containerAppName: tp2-8100
           resourceGroup: EquipeRahamen
-          imageToBuild: enriquetupapi/tp2-8100:main
+          imageToBuild: enriquitotupapi/tp2-8100:main
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 
