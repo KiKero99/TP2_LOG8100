@@ -12,7 +12,7 @@ const password = process.env.POSTGRES_PASSWORD || 'password';
 const host = process.env.DB_HOST || 'localhost';
 
 // Initialize Sequelize connection
-const sequelize = new Sequelize(database, username, password, {
+const sequelize = new Sequelize("postgres://admin_admin:enriquetupapi01.@tp2-8100.postgres.database.azure.com:5432/postgres", {
   host: host,
   dialect: 'postgres',
   logging: false, 
