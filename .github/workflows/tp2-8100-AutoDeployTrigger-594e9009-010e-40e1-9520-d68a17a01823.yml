@@ -36,8 +36,8 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}
           _dockerfilePathKey_: _dockerfilePath_
-          registryUrl: https://registry-1.docker.io/v2/
-          registryUsername: ${{ secrets.TP28100_REGISTRY_USERNAME }}
+          registryUrl: docker.io
+          registryUsername: KiKenRo 99
           registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
           containerAppName: tp2-8100
           resourceGroup: EquipeRahamen
