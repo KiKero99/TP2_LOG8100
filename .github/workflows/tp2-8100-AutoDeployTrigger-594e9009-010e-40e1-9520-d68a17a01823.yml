@@ -38,7 +38,7 @@ jobs:
           _dockerfilePathKey_: _dockerfilePath_
           registryUrl: docker.io
           registryUsername: ${{ secrets.TP28100_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.TP28100_REGISTRY_PASSWORD }}
+          registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
           containerAppName: tp2-8100
           resourceGroup: EquipeRahamen
           imageToBuild: enriquetupapi/tp2-8100:${{ github.sha }}
