@@ -6,21 +6,26 @@ services:
     ports:
       - "9090:9090"
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      DB_HOST: db 
+      POSTGRES_DB: verceldb
+      POSTGRES_USER: default
+      POSTGRES_PASSWORD: 7TlLuNWc5QeO
+      DB_HOST: db
+      DB_PORT: 5432
+      POSTGRES_URL: postgres://default:7TlLuNWc5QeO@db:5432/verceldb
+      PORT: 9090
     depends_on:
       - db
     volumes:
       - .:/app
+    command: npm start 
 
   db:
     image: postgres:latest
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: verceldb
+      POSTGRES_USER: default
+      POSTGRES_PASSWORD: 7TlLuNWc5QeO
+      POSTGRES_HOST_AUTH_METHOD: trust  
     ports:
       - "5432:5432"
     volumes:
