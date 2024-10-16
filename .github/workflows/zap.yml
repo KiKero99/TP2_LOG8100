@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  issues: write
   security-events: write  # Allow CodeQL to upload results and create alerts
 
 jobs:
