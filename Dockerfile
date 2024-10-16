@@ -16,4 +16,4 @@ COPY dvna-master .
 EXPOSE 9090
 
 # Set the default command to start the app
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
